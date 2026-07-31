@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class Main{
 
@@ -78,10 +79,22 @@ public class Main{
     }
 
     private static int readChoice(Scanner scanner){
-        System.out.print("Input menu option: ");
-        int choice = scanner.nextInt();
-        return choice;
-    }
+            while(true){
+                try{
+                    System.out.print("Input menu option: ");
+                    int choice = scanner.nextInt();
+                    if(1 <= choice && choice <= 7){
+                        return choice;
+                    }else{
+                        System.out.println("Invalid option please put a number between 1 and 7");
+                    }
+                }
+                catch(InputMismatchException e){
+                    System.out.println("Invalid option please put a number between 1 and 7");
+                    scanner.nextLine();
+                }
+            }
+        }
 
     private static String readName(Scanner scanner, String prompt){
         System.out.print(prompt);
