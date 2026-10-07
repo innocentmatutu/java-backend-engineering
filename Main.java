@@ -97,13 +97,40 @@ public class Main{
         }
 
     private static String readName(Scanner scanner, String prompt){
-        System.out.print(prompt);
-        return scanner.nextLine();
+        
+        while(true){
+            
+            System.out.println(prompt);
+            String name = scanner.nextLine().trim();
+
+                if(!name.isEmpty()){
+                    return name;
+                }
+
+                System.out.println("Name cannot be blank!");
+            
+        }
+
     }
 
     private static double readAmount(Scanner scanner, String prompt){
-        System.out.print(prompt);
-        return scanner.nextDouble();
+        
+        while(true){
+            try{
+                System.out.println(prompt);
+                double amount = scanner.nextDouble();
+                if(amount > 0){
+                    return amount;
+                } else{
+                    System.out.println("Please enter an amount greater than zero");
+                }
+            } catch(InputMismatchException e){
+                System.out.println("Please enter a valid amount");
+                scanner.nextLine();
+
+            }
+        }
+        
     }
 
     private static void createSavingsAccount(Bank bank, Scanner scanner){
@@ -149,8 +176,11 @@ public class Main{
         BankAccount account = bank.findAccount(ownerName);
         if (account != null){
             double amount = readAmount(scanner, "Enter deposit amount: ");
-            account.deposit(amount);
-            System.out.println("Deposit successful");
+            if(account.deposit(amount)){
+                System.out.println("Deposit successful");
+            }else{
+                System.out.println("Invalid amount");
+            }
             System.out.println("New account balance is " + account.getBalance());
             
         }else{
